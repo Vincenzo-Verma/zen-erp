@@ -146,8 +146,6 @@ export function SchoolDashboard() {
         };
     }, [students]);
 
-    const today = new Date();
-    const dateString = today.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     const basePath = `/school/${slug}/portal`;
 
     return (

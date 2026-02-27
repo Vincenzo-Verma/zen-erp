@@ -17,6 +17,7 @@ interface StaffMember {
     department: string;
     is_active: boolean;
     created_at: string;
+    [key: string]: unknown;
 }
 
 interface OnboardResponse {

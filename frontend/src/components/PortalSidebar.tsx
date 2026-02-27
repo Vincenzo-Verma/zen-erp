@@ -30,7 +30,7 @@ interface Props {
     onToggleMini?: () => void;
 }
 
-export function PortalSidebar({ mini, mobileOpen, onCloseMobile, onToggleMini }: Props) {
+export function PortalSidebar({ mini, mobileOpen, onCloseMobile, onToggleMini: _onToggleMini }: Props) {
     const { currentSchool, slug, userRole } = useSchoolContext();
     const logout = useAuthStore((s) => s.logout);
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ export function PortalSidebar({ mini, mobileOpen, onCloseMobile, onToggleMini }:
                                 className="d-flex align-items-center border bg-white rounded p-2 mb-4"
                             >
                                 <img
-                                    src={currentSchool?.logo || '/assets/img/icons/global-img.svg'}
+                                    src={'/assets/img/icons/global-img.svg'}
                                     className="avatar avatar-md img-fluid rounded"
                                     alt="Profile"
                                 />

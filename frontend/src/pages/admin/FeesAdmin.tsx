@@ -27,8 +27,7 @@ export function FeesAdmin() {
     const collectionRate = Math.round((totalCollected / (totalCollected + totalPending)) * 100);
 
     const barOpts = getBarOptions(
-        feeHeads.map((f) => f.head.split(' ')[0]),
-        'Collection by Fee Head'
+        feeHeads.map((f) => f.head.split(' ')[0])
     );
 
     return (

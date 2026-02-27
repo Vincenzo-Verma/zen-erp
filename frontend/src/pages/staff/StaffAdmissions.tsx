@@ -15,6 +15,7 @@ interface Student {
     class_grade: number;
     section: string;
     is_active: boolean;
+    [key: string]: unknown;
 }
 
 interface AdmitResponse {

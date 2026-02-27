@@ -82,7 +82,7 @@ export function ParentDashboard() {
                     <StatCard label="Attendance" value={attendancePct} suffix="%" icon={<IconClipboardCheck size={22} />} variant="success" />
                 </div>
                 <div className="col-sm-6 col-lg-3">
-                    <StatCard label="Latest Grade" value="A" icon={<IconUser size={22} />} variant="primary" />
+                    <StatCard label="Latest Grade" value={90} icon={<IconUser size={22} />} variant="primary" />
                 </div>
                 <div className="col-sm-6 col-lg-3">
                     <StatCard label="Fees Paid" value={feesSummary.paid} prefix="$" icon={<IconCoin size={22} />} variant="info" />
