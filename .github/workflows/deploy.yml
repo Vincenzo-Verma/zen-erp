@@ -91,6 +91,13 @@ jobs:
           OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
           OCI_CLI_REGION: ${{ secrets.OCI_REGION }}
 
+      - name: Verify kubectl connection
+        run: |
+          echo "Current context:"
+          kubectl config current-context
+          echo "Cluster info:"
+          kubectl cluster-info || echo "Failed to connect to cluster"
+
       - name: Create/update namespace
         run: kubectl apply -f deploy/k8s/00-namespace.yaml
 
