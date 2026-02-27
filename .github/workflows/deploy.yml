@@ -75,6 +75,12 @@ jobs:
     name: Deploy to OKE
     needs: build
     runs-on: ubuntu-latest
+    env:
+      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+      OCI_CLI_REGION: ${{ secrets.OCI_REGION }}
 
     steps:
       - name: Checkout code
@@ -84,12 +90,15 @@ jobs:
         uses: oracle-actions/configure-kubectl-oke@v1.5.0
         with:
           cluster: ${{ secrets.OKE_CLUSTER_OCID }}
-        env:
-          OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
-          OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
-          OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
-          OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
-          OCI_CLI_REGION: ${{ secrets.OCI_REGION }}
+
+      - name: Verify OCI CLI authentication
+        run: |
+          echo "OCI CLI path: $(which oci)"
+          echo "Testing OCI auth..."
+          oci iam region list --output table 2>&1 || true
+          echo ""
+          echo "Kubeconfig:"
+          cat ~/.kube/config 2>/dev/null | grep -v 'certificate-authority-data' || true
 
       - name: Verify kubectl connection
         run: |
