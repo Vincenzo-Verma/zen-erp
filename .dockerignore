@@ -6,7 +6,8 @@ frontend/dist/
 .env
 .env.*
 *.md
-deploy/
+deploy/docker/
+deploy/k8s/
 .dockerignore
 .gitignore
 .vscode/
