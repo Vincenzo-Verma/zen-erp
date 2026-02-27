@@ -1,0 +1,17 @@
+[package]
+name = "health-check"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "health-check"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+tracing = { workspace = true }
+dotenvy = { workspace = true }
+
+erp-proto = { path = "../../libs/proto" }
+erp-logger = { path = "../../libs/logger" }

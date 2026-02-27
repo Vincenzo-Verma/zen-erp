@@ -1,0 +1,157 @@
+/* ============================================
+   Shared Utility Classes
+   Custom utilities not covered by template.css
+   ============================================ */
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slideIn {
+    animation: slideIn 0.3s ease-out;
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* --- Spinner --- */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--erp-border);
+    border-top-color: var(--erp-primary);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+/* --- Content cards --- */
+.content-card {
+    background-color: var(--erp-card-bg);
+    border: 1px solid var(--erp-border);
+    border-radius: var(--erp-radius);
+    box-shadow: var(--erp-shadow-sm);
+}
+
+/* --- Status dot --- */
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-dot-success { background-color: var(--erp-success); }
+.status-dot-danger { background-color: var(--erp-danger); }
+.status-dot-warning { background-color: var(--erp-warning); }
+.status-dot-primary { background-color: var(--erp-primary); }
+
+/* --- Demo / Sample Data Banner --- */
+.demo-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    margin-bottom: 1.5rem;
+    background: rgba(var(--erp-warning-rgb), 0.08);
+    border: 1px solid rgba(var(--erp-warning-rgb), 0.25);
+    border-radius: var(--erp-radius);
+    font-size: 14px;
+    color: var(--erp-text-secondary);
+}
+
+.demo-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    background: rgba(var(--erp-warning-rgb), 0.2);
+    color: var(--erp-warning);
+    white-space: nowrap;
+}
+
+.demo-badge-sm {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(var(--erp-warning-rgb), 0.15);
+    color: var(--erp-warning);
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* --- Empty / placeholder state --- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--erp-text-muted);
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.empty-state-sm {
+    padding: 1rem;
+    font-size: 14px;
+}
+
+/* --- Text alias utilities --- */
+.text-default  { color: #6A7287 !important; }
+.text-title    { color: #202C4B !important; }
+.text-subtitle { color: #6A7287 !important; }
+
+/* --- Border style utilities --- */
+.border-dashed { border-style: dashed !important; }
+.border-dotted { border-style: dotted !important; }
+
+/* --- Gradient backgrounds --- */
+.bg-primary-gradient {
+    background: linear-gradient(180deg, #F3F6FF 0%, #FFFFFF 100%) !important;
+}
+
+.bg-success-gradient {
+    background: linear-gradient(180deg, #E8F9E8 0%, #FFFFFF 100%) !important;
+}
+
+.bg-warning-gradient {
+    background: linear-gradient(180deg, #FEF8EA 0%, #FFFFFF 100%) !important;
+}
+
+.bg-danger-gradient {
+    background: linear-gradient(180deg, #FDE9ED 0%, #FFFFFF 100%) !important;
+}
+
+.bg-info-gradient {
+    background: linear-gradient(180deg, #E7F1FC 0%, #FFFFFF 100%) !important;
+}
+
+.bg-secondary-gradient {
+    background: linear-gradient(180deg, #E8FCFF 0%, #FFFFFF 100%) !important;
+}

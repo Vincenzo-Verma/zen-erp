@@ -1,0 +1,212 @@
+.admin-tenants {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* Toolbar */
+.tenants-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.tenants-search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex: 1;
+    max-width: 320px;
+}
+
+.search-icon {
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: var(--font-sm);
+    font-family: var(--font-family);
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 4px;
+}
+
+.filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    font-size: var(--font-xs);
+    font-family: var(--font-family);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-tab:hover {
+    color: var(--text-secondary);
+    background: var(--bg-glass);
+}
+
+.filter-tab-active {
+    background: var(--accent-primary-glow);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary-hover);
+}
+
+.filter-count {
+    font-size: 10px;
+    background: var(--bg-glass);
+    padding: 0 6px;
+    border-radius: var(--radius-full);
+    min-width: 18px;
+    text-align: center;
+}
+
+.filter-tab-active .filter-count {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+/* Table */
+.tenants-table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.tenants-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tenants-table th {
+    text-align: left;
+    font-size: var(--font-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-glass);
+}
+
+.tenants-table td {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.tenants-table tr:hover {
+    background: var(--bg-glass);
+}
+
+.tenant-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.tenant-cell-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--accent-primary), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-sm);
+    color: white;
+    flex-shrink: 0;
+}
+
+.tenant-cell-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.tenant-cell-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.tenant-cell-slug {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+}
+
+.status-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.plan-label {
+    font-size: var(--font-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+}
+
+.balance-zero {
+    color: var(--accent-danger) !important;
+    font-weight: 600;
+}
+
+.date-cell {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+}
+
+.row-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-danger-text {
+    color: var(--accent-danger) !important;
+}
+
+.btn-danger-text:hover {
+    background: var(--accent-danger-glow) !important;
+}
+
+.btn-success-text {
+    color: var(--accent-success) !important;
+}
+
+.btn-success-text:hover {
+    background: var(--accent-success-glow) !important;
+}
+
+.tenants-empty {
+    padding: var(--space-2xl);
+    text-align: center;
+    color: var(--text-muted);
+}

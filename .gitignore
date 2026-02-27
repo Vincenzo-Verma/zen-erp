@@ -1,0 +1,46 @@
+# Rust
+target/
+Cargo.lock
+*.rs.bk
+**/*.rs.bk
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.env.local
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Secrets
+secrets/
+.oci/

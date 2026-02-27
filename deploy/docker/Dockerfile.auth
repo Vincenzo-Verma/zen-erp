@@ -1,0 +1,18 @@
+FROM rust:1.83-bookworm AS builder
+RUN apt-get update && apt-get install -y protobuf-compiler && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY Cargo.toml Cargo.lock ./
+COPY libs/ libs/
+COPY core/ core/
+COPY bin/ bin/
+COPY plugins/ plugins/
+COPY migrations/ migrations/
+RUN cargo build --release --bin auth-service
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /app/target/release/auth-service /usr/local/bin/auth-service
+COPY --from=builder /app/migrations /app/migrations
+WORKDIR /app
+EXPOSE 50052
+CMD ["auth-service"]

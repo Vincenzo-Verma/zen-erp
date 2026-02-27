@@ -1,0 +1,88 @@
+/* ============================================
+   Theme Variables — Light (default) + Dark mode
+   Colors adapted from Preskool template
+   ============================================ */
+
+:root {
+    /* Brand Colors */
+    --erp-primary: #3D5EE1;
+    --erp-primary-rgb: 61, 94, 225;
+    --erp-secondary: #6FCCD8;
+    --erp-success: #1ABE17;
+    --erp-success-rgb: 26, 190, 23;
+    --erp-warning: #EAB300;
+    --erp-warning-rgb: 234, 179, 0;
+    --erp-danger: #E82646;
+    --erp-danger-rgb: 232, 38, 70;
+    --erp-info: #0F65CD;
+
+    /* Light theme surfaces */
+    --erp-body-bg: #FFFFFF;
+    --erp-card-bg: #FFFFFF;
+    --erp-sidebar-bg: #FFFFFF;
+    --erp-header-bg: #FFFFFF;
+    --erp-input-bg: #FFFFFF;
+    --erp-content-bg: #FBFBFD;
+
+    /* Light theme text */
+    --erp-text-primary: #202C4B;
+    --erp-text-secondary: #6A7287;
+    --erp-text-muted: #677788;
+
+    /* Light theme borders */
+    --erp-border: #E9EDF4;
+    --erp-border-light: #F2F4F8;
+
+    /* Shadows */
+    --erp-shadow-sm: 0px 4px 12px -1px rgba(222, 222, 222, 0.36);
+    --erp-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+    --erp-shadow-md: 0px 4px 24px rgba(0, 0, 0, 0.06);
+    --erp-shadow-lg: 0px 8px 32px rgba(0, 0, 0, 0.1);
+
+    /* Hover */
+    --erp-hover-bg: rgba(61, 94, 225, 0.06);
+
+    /* Layout */
+    --erp-sidebar-width: 252px;
+    --erp-sidebar-mini-width: 80px;
+    --erp-header-height: 56px;
+    --erp-radius: 5px;
+    --erp-radius-lg: 8px;
+
+    /* Soft badge backgrounds */
+    --erp-soft-primary: rgba(61, 94, 225, 0.1);
+    --erp-soft-success: rgba(26, 190, 23, 0.1);
+    --erp-soft-warning: rgba(234, 179, 0, 0.1);
+    --erp-soft-danger: rgba(232, 38, 70, 0.1);
+    --erp-soft-info: rgba(15, 101, 205, 0.1);
+}
+
+/* Dark theme overrides */
+[data-bs-theme="dark"] {
+    --erp-body-bg: #0F0C1C;
+    --erp-card-bg: #131022;
+    --erp-sidebar-bg: #131022;
+    --erp-header-bg: #131022;
+    --erp-input-bg: #1B1632;
+    --erp-content-bg: #0F0C1C;
+
+    --erp-text-primary: #E5E7EB;
+    --erp-text-secondary: #9CA3AF;
+    --erp-text-muted: #6B7280;
+
+    --erp-border: #1B1632;
+    --erp-border-light: #231E3D;
+
+    --erp-shadow-sm: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    --erp-shadow: 0px 4px 16px rgba(0, 0, 0, 0.35);
+    --erp-shadow-md: 0px 4px 24px rgba(0, 0, 0, 0.4);
+    --erp-shadow-lg: 0px 8px 32px rgba(0, 0, 0, 0.5);
+
+    --erp-hover-bg: rgba(255, 255, 255, 0.05);
+
+    --erp-soft-primary: rgba(61, 94, 225, 0.15);
+    --erp-soft-success: rgba(26, 190, 23, 0.15);
+    --erp-soft-warning: rgba(234, 179, 0, 0.15);
+    --erp-soft-danger: rgba(232, 38, 70, 0.15);
+    --erp-soft-info: rgba(15, 101, 205, 0.15);
+}

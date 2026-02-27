@@ -1,0 +1,96 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-lg);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 480px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--space-lg) 0;
+}
+
+.modal-title {
+    font-size: var(--font-lg);
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.modal-footer {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: flex-end;
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.slug-suggestions {
+    background: var(--bg-secondary, #f8f9fa);
+    border: 1px solid var(--border-subtle, #e2e8f0);
+    border-radius: var(--radius-md, 8px);
+    padding: var(--space-sm, 8px) var(--space-md, 12px);
+}
+
+.suggestions-label {
+    font-size: var(--font-sm, 13px);
+    color: var(--text-muted, #6b7280);
+    margin: 0 0 var(--space-xs, 6px);
+}
+
+.suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs, 6px);
+}
+
+.suggestion-chip {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: var(--font-sm, 13px);
+    font-family: monospace;
+    background: var(--bg-primary, #fff);
+    border: 1px solid var(--accent, #6366f1);
+    color: var(--accent, #6366f1);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.suggestion-chip:hover {
+    background: var(--accent, #6366f1);
+    color: #fff;
+}

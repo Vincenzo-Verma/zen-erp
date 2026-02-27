@@ -1,0 +1,153 @@
+.profile-page {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* Hero */
+.profile-hero {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+}
+
+.profile-avatar-large {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--accent-primary), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-2xl);
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.profile-hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-name {
+    font-size: var(--font-xl);
+    font-weight: 700;
+}
+
+.profile-email {
+    font-size: var(--font-base);
+    color: var(--text-secondary);
+}
+
+.profile-id {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+/* Grid */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-md);
+}
+
+.profile-section {
+    padding: var(--space-lg);
+}
+
+.profile-section-title {
+    font-size: var(--font-md);
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Org list */
+.org-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.org-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--bg-glass);
+}
+
+.org-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--accent-primary), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-sm);
+    color: white;
+    flex-shrink: 0;
+}
+
+.org-info {
+    flex: 1;
+}
+
+.org-name {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.org-slug {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+    margin-left: var(--space-xs);
+}
+
+/* Sessions */
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.session-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--bg-glass);
+}
+
+.session-icon {
+    color: var(--text-muted);
+}
+
+.session-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.session-device {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.session-meta {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+}

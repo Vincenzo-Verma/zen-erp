@@ -1,0 +1,184 @@
+syntax = "proto3";
+package erp.tenancy;
+
+/// Tenant Management service.
+service TenancyService {
+  /// Create a new tenant (organization).
+  rpc CreateTenant (CreateTenantRequest) returns (TenantResponse);
+
+  /// Get tenant details by ID.
+  rpc GetTenant (GetTenantRequest) returns (TenantResponse);
+
+  /// Get tenant details by slug.
+  rpc GetTenantBySlug (GetTenantBySlugRequest) returns (TenantResponse);
+
+  /// List all tenants for a user.
+  rpc ListTenants (ListTenantsRequest) returns (ListTenantsResponse);
+
+  /// Add a user to a tenant with a role.
+  rpc AddUserToTenant (AddUserToTenantRequest) returns (TenantUserResponse);
+
+  /// Get a user's role within a specific tenant.
+  rpc GetUserRole (GetUserRoleRequest) returns (GetUserRoleResponse);
+
+  /// List all roles for a tenant.
+  rpc ListRoles (ListRolesRequest) returns (ListRolesResponse);
+
+  /// List all users in a tenant with their roles.
+  rpc ListTenantUsers (ListTenantUsersRequest) returns (ListTenantUsersResponse);
+
+  /// List all plugins (with tenant activation status).
+  rpc ListPlugins (ListPluginsRequest) returns (ListPluginsResponse);
+
+  /// Activate a plugin for a tenant.
+  rpc ActivatePlugin (PluginActionRequest) returns (PluginActionResponse);
+
+  /// Deactivate a plugin for a tenant.
+  rpc DeactivatePlugin (PluginActionRequest) returns (PluginActionResponse);
+
+  /// Update a tenant's custom domain.
+  rpc UpdateTenantDomain (UpdateTenantDomainRequest) returns (TenantResponse);
+
+  /// Update a tenant's prefix for numbering.
+  rpc UpdateTenantPrefix (UpdateTenantPrefixRequest) returns (TenantResponse);
+}
+
+message CreateTenantRequest {
+  string name = 1;
+  string slug = 2;
+  string owner_user_id = 3;
+  string type = 4;             // school, clinic, etc.
+  string domain = 5;           // custom domain (optional)
+}
+
+message GetTenantRequest {
+  string tenant_id = 1;
+}
+
+message GetTenantBySlugRequest {
+  string slug = 1;
+}
+
+message ListTenantsRequest {
+  string user_id = 1;  // List tenants this user belongs to
+}
+
+message TenantResponse {
+  bool success = 1;
+  string message = 2;
+  Tenant tenant = 3;
+  repeated string suggestions = 4;  // available slug suggestions when conflict
+}
+
+message ListTenantsResponse {
+  repeated Tenant tenants = 1;
+}
+
+message Tenant {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string status = 4;
+  string plan_tier = 5;
+  string created_at = 6;
+  string type = 7;
+  string domain = 8;
+  string prefix = 9;         // school prefix for numbering, e.g., "GVS"
+}
+
+message AddUserToTenantRequest {
+  string tenant_id = 1;
+  string user_id = 2;
+  string role = 3;
+}
+
+message TenantUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetUserRoleRequest {
+  string tenant_id = 1;
+  string user_id = 2;
+}
+
+message GetUserRoleResponse {
+  bool found = 1;
+  string role = 2;       // role name: admin, teacher, student, parent, accountant
+  string tenant_id = 3;
+}
+
+// ── Role Management ──
+
+message ListRolesRequest {
+  string tenant_id = 1;
+}
+
+message ListRolesResponse {
+  repeated Role roles = 1;
+}
+
+message Role {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  bool is_system = 4;
+}
+
+message ListTenantUsersRequest {
+  string tenant_id = 1;
+}
+
+message ListTenantUsersResponse {
+  repeated TenantUser users = 1;
+}
+
+message TenantUser {
+  string user_id = 1;
+  string email = 2;
+  string full_name = 3;
+  string role_name = 4;
+  string role_id = 5;
+}
+
+// ── Plugin Management ──
+
+message ListPluginsRequest {
+  string tenant_id = 1;
+}
+
+message ListPluginsResponse {
+  repeated PluginInfo plugins = 1;
+}
+
+message PluginInfo {
+  string id = 1;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+  string version = 5;
+  bool is_active_for_tenant = 6;
+  bool is_included_in_plan = 7;
+}
+
+message PluginActionRequest {
+  string tenant_id = 1;
+  string plugin_id = 2;
+}
+
+message PluginActionResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// ── Tenant Settings ──
+
+message UpdateTenantDomainRequest {
+  string tenant_id = 1;
+  string domain = 2;
+}
+
+message UpdateTenantPrefixRequest {
+  string tenant_id = 1;
+  string prefix = 2;
+}

@@ -1,0 +1,49 @@
+syntax = "proto3";
+package erp.audit;
+
+service AuditService {
+  rpc RecordEvent (RecordEventRequest) returns (RecordEventResponse);
+  rpc ListEvents (ListEventsRequest) returns (ListEventsResponse);
+}
+
+message RecordEventRequest {
+  string tenant_id = 1;
+  string user_id = 2;
+  string user_email = 3;
+  string action = 4;
+  string resource_type = 5;
+  string resource_id = 6;
+  string details_json = 7;
+  string ip_address = 8;
+}
+
+message RecordEventResponse {
+  bool success = 1;
+  string event_id = 2;
+}
+
+message ListEventsRequest {
+  string tenant_id = 1;
+  string action_filter = 2;
+  string resource_type_filter = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+message ListEventsResponse {
+  repeated AuditEvent events = 1;
+  int32 total_count = 2;
+}
+
+message AuditEvent {
+  string id = 1;
+  string tenant_id = 2;
+  string user_id = 3;
+  string user_email = 4;
+  string action = 5;
+  string resource_type = 6;
+  string resource_id = 7;
+  string details_json = 8;
+  string ip_address = 9;
+  string created_at = 10;
+}

@@ -1,0 +1,41 @@
+# Ingress: Layer 7 LB for *.saas-erp.com → Kernel
+# Requires: Nginx Ingress Controller (e.g. ingress-nginx)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: saas-erp-ingress
+  namespace: saas-erp
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+spec:
+  ingressClassName: nginx
+  rules:
+    # Wildcard: all subdomains and main domain → kernel
+    - host: saas-erp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kernel-service
+                port:
+                  number: 8080
+    - host: "*.saas-erp.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kernel-service
+                port:
+                  number: 8080
+  # Optional: TLS
+  # tls:
+  #   - hosts:
+  #       - saas-erp.com
+  #       - "*.saas-erp.com"
+  #     secretName: saas-erp-tls

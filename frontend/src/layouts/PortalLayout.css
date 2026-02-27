@@ -1,0 +1,56 @@
+/* ── Main wrapper ── */
+.main-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ── Page wrapper (content area right of sidebar) ── */
+.page-wrapper {
+    margin-left: var(--erp-sidebar-width);
+    padding-top: var(--erp-header-height);
+    min-height: 100vh;
+    width: calc(100% - var(--erp-sidebar-width));
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+.page-wrapper .content {
+    padding: 24px;
+    background-color: var(--erp-content-bg);
+    min-height: calc(100vh - var(--erp-header-height));
+}
+
+/* ── Mini sidebar mode ── */
+.mini-sidebar .page-wrapper {
+    margin-left: var(--erp-sidebar-mini-width);
+    width: calc(100% - var(--erp-sidebar-mini-width));
+}
+
+/* ── Mobile overlay ── */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 998;
+    display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991.98px) {
+    .page-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .mini-sidebar .page-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .page-wrapper .content {
+        padding: 16px;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+}

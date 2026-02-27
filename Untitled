@@ -1,0 +1,53 @@
+Role: Act as a Senior Cloud Architect and Lead Backend Engineer.
+
+Objective: Scaffold a highly scalable, multi-tenant SaaS ERP system using a Microkernel Architecture implemented via Microservices on Kubernetes.
+
+System Context:
+The system consists of a "Core Kernel" and distinct "Feature Plugins."
+
+The Kernel (Orchestrator): A lightweight service responsible for Authentication, Tenant Identification (via subdomain or header), and Request Routing. It acts as an API Gateway that proxies requests to specific plugins based on the tenant's subscription.
+
+The Plugins (Microservices): Independent Dockerized services (e.g., finance-service, hr-service, inventory-service) that handle business logic. They do not communicate directly with the outside world; they only accept traffic from the Kernel or other plugins.
+
+Infrastructure: The system runs on Kubernetes. We use an Ingress Controller (Nginx) as the Layer 7 Load Balancer to route *.saas-erp.com traffic to the Kernel.
+
+Tech Stack Requirements:
+
+Kernel: Go (Golang) or Node.js (High performance, async).
+
+Plugins: Python or Java (Rich ecosystem for business logic).
+
+Communication: gRPC (internal) or REST.
+
+Containerization: Docker.
+
+Orchestration: Kubernetes (Standard YAML manifests).
+
+Deliverables:
+Please generate the following to start the project:
+
+Project Directory Structure: A monorepo structure showing where the Kernel, Plugins, and Infrastructure (K8s) files reside.
+
+The Kernel Code Scaffold:
+
+A main entry point that starts an HTTP server.
+
+Middleware for parsing the Tenant-ID.
+
+A simple dynamic router that forwards a request from /api/finance/... to the internal DNS http://finance-service.
+
+A Sample Plugin Scaffold (Finance):
+
+A simple Dockerfile for this service.
+
+A basic endpoint /invoice that returns a dummy JSON response.
+
+Kubernetes Manifests:
+
+ingress.yaml: Configured for wildcard hosts.
+
+kernel-deployment.yaml: The deployment and service for the core.
+
+finance-deployment.yaml: The deployment and service for the plugin.
+
+Constraint: Ensure the code demonstrates how the Kernel passes the "Tenant Context" (e.g., X-Tenant-ID) downstream to the plugins so the plugin knows which database schema to access.

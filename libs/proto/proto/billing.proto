@@ -1,0 +1,53 @@
+syntax = "proto3";
+package erp.billing;
+
+/// Billing & Wallet service.
+service BillingService {
+  /// Get wallet balance for a tenant.
+  rpc GetWallet (GetWalletRequest) returns (WalletResponse);
+
+  /// Top up the wallet.
+  rpc TopUpWallet (TopUpRequest) returns (WalletResponse);
+
+  /// Record a billable event (deduct from wallet).
+  rpc RecordUsage (RecordUsageRequest) returns (WalletResponse);
+
+  /// Check tenant health (Active / GracePeriod / Suspended).
+  rpc CheckHealth (CheckHealthRequest) returns (HealthStatusResponse);
+}
+
+message GetWalletRequest {
+  string tenant_id = 1;
+}
+
+message TopUpRequest {
+  string tenant_id = 1;
+  double amount = 2;
+  string description = 3;
+}
+
+message RecordUsageRequest {
+  string tenant_id = 1;
+  string resource_type = 2;  // "api_call", "storage", "active_user"
+  double amount = 3;
+  double unit_cost = 4;
+}
+
+message WalletResponse {
+  bool success = 1;
+  string message = 2;
+  double balance = 3;
+  string currency = 4;
+  string status = 5;  // active, grace_period, suspended
+}
+
+message CheckHealthRequest {
+  string tenant_id = 1;
+}
+
+message HealthStatusResponse {
+  string status = 1;  // active, grace_period, suspended, archived
+  double balance = 2;
+  double daily_burn_rate = 3;
+  double days_runway = 4;
+}

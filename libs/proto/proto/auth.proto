@@ -1,0 +1,51 @@
+syntax = "proto3";
+package erp.auth;
+
+/// Authentication & Identity service.
+service AuthService {
+  /// Register a new user account.
+  rpc Register (RegisterRequest) returns (AuthResponse);
+
+  /// Login with email/password, returns JWT.
+  rpc Login (LoginRequest) returns (AuthResponse);
+
+  /// Verify an existing JWT token.
+  rpc VerifyToken (VerifyTokenRequest) returns (VerifyTokenResponse);
+
+  /// Force update a user's password (used by admins).
+  rpc UpdatePassword (UpdatePasswordRequest) returns (AuthResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string full_name = 3;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthResponse {
+  bool success = 1;
+  string message = 2;
+  string token = 3;        // JWT
+  string user_id = 4;
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string email = 3;
+  repeated string roles = 4;
+}
+
+message UpdatePasswordRequest {
+  string user_id = 1;
+  string new_password = 2;
+}

@@ -1,0 +1,152 @@
+name: Build & Deploy to OKE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  OCI_REGION: ${{ secrets.OCI_REGION }}
+  REGISTRY: ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_TENANCY_NAMESPACE }}
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Build and push all Docker images
+  # ──────────────────────────────────────────────
+  build:
+    name: Build & Push Images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - service: gateway
+            dockerfile: deploy/docker/Dockerfile.gateway
+          - service: auth-service
+            dockerfile: deploy/docker/Dockerfile.auth
+          - service: tenancy-service
+            dockerfile: deploy/docker/Dockerfile.tenancy
+          - service: billing-service
+            dockerfile: deploy/docker/Dockerfile.billing
+          - service: school-service
+            dockerfile: deploy/docker/Dockerfile.school
+          - service: health-check
+            dockerfile: deploy/docker/Dockerfile.health
+          - service: frontend
+            dockerfile: deploy/docker/Dockerfile.frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to OCIR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.OCI_REGION }}.ocir.io
+          username: ${{ secrets.OCIR_USERNAME }}
+          password: ${{ secrets.OCIR_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push ${{ matrix.service }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/saas-erp/${{ matrix.service }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/saas-erp/${{ matrix.service }}:latest
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  # ──────────────────────────────────────────────
+  # Job 2: Deploy to OKE
+  # ──────────────────────────────────────────────
+  deploy:
+    name: Deploy to OKE
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure OCI CLI
+        uses: oracle-actions/configure-kubectl-oke@v1.5.1
+        with:
+          cluster: ${{ secrets.OKE_CLUSTER_OCID }}
+          region: ${{ secrets.OCI_REGION }}
+        env:
+          OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+          OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+          OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+          OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+          OCI_CLI_REGION: ${{ secrets.OCI_REGION }}
+
+      - name: Create/update namespace
+        run: kubectl apply -f deploy/k8s/00-namespace.yaml
+
+      - name: Update secrets
+        run: |
+          kubectl create secret generic erp-secrets \
+            --namespace saas-erp \
+            --from-literal=DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            --from-literal=JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+            --from-literal=NATS_URL="${{ secrets.NATS_URL }}" \
+            --from-literal=POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Replace image registry in manifests
+        run: |
+          sed -i "s|REGISTRY|${{ env.REGISTRY }}|g" deploy/k8s/04-backend.yaml
+          sed -i "s|REGISTRY|${{ env.REGISTRY }}|g" deploy/k8s/05-gateway.yaml
+          sed -i "s|REGISTRY|${{ env.REGISTRY }}|g" deploy/k8s/06-frontend.yaml
+
+      - name: Deploy infrastructure (Postgres + NATS)
+        run: |
+          kubectl apply -f deploy/k8s/02-postgres.yaml
+          kubectl apply -f deploy/k8s/03-nats.yaml
+
+      - name: Wait for Postgres to be ready
+        run: |
+          kubectl rollout status statefulset/postgres -n saas-erp --timeout=120s
+
+      - name: Deploy backend services
+        run: |
+          kubectl apply -f deploy/k8s/04-backend.yaml
+
+      - name: Deploy gateway
+        run: |
+          kubectl apply -f deploy/k8s/05-gateway.yaml
+
+      - name: Deploy frontend
+        run: |
+          kubectl apply -f deploy/k8s/06-frontend.yaml
+
+      - name: Deploy ingress
+        run: |
+          kubectl apply -f deploy/k8s/07-ingress.yaml
+
+      - name: Restart deployments with new images
+        run: |
+          kubectl rollout restart deployment/auth-service -n saas-erp
+          kubectl rollout restart deployment/tenancy-service -n saas-erp
+          kubectl rollout restart deployment/billing-service -n saas-erp
+          kubectl rollout restart deployment/school-service -n saas-erp
+          kubectl rollout restart deployment/health-check -n saas-erp
+          kubectl rollout restart deployment/gateway -n saas-erp
+          kubectl rollout restart deployment/frontend -n saas-erp
+
+      - name: Wait for rollout to complete
+        run: |
+          kubectl rollout status deployment/gateway -n saas-erp --timeout=180s
+          kubectl rollout status deployment/frontend -n saas-erp --timeout=180s
+
+      - name: Verify deployment
+        run: |
+          echo "=== Pod Status ==="
+          kubectl get pods -n saas-erp
+          echo ""
+          echo "=== Services ==="
+          kubectl get svc -n saas-erp

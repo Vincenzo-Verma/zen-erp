@@ -1,0 +1,192 @@
+.health-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.health-live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-default);
+    font-size: var(--font-xs);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.live-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.live-ok {
+    background: var(--accent-success);
+    box-shadow: 0 0 8px var(--accent-success);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.live-warn {
+    background: var(--accent-warning);
+    box-shadow: 0 0 8px var(--accent-warning);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Service Grid */
+.health-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.service-card {
+    padding: var(--space-lg);
+    border-left: 3px solid;
+    transition: all var(--transition-fast);
+}
+
+.service-card:hover {
+    transform: translateY(-2px);
+}
+
+.service-card.status-up {
+    border-left-color: var(--accent-success);
+}
+
+.service-card.status-warn {
+    border-left-color: var(--accent-warning);
+}
+
+.service-card.status-down {
+    border-left-color: var(--accent-danger);
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.service-status-icon {
+    font-size: var(--font-md);
+}
+
+.service-name {
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.service-metrics {
+    display: flex;
+    gap: var(--space-lg);
+}
+
+.service-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sm-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.sm-value {
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sm-operational {
+    color: var(--accent-success);
+}
+
+.sm-degraded {
+    color: var(--accent-warning);
+}
+
+.sm-down {
+    color: var(--accent-danger);
+}
+
+/* Resources */
+.health-resources {
+    padding: var(--space-lg);
+}
+
+.resource-gauges {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
+/* Uptime History */
+.uptime-section {
+    padding: var(--space-lg);
+}
+
+.uptime-section .chart-title {
+    margin-bottom: var(--space-md);
+}
+
+.uptime-bars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: var(--space-sm);
+}
+
+.uptime-bar {
+    flex: 1;
+    height: 28px;
+    border-radius: 3px;
+    transition: opacity var(--transition-fast);
+    cursor: pointer;
+}
+
+.uptime-bar:hover {
+    opacity: 0.8;
+}
+
+.uptime-up {
+    background: var(--accent-success);
+    opacity: 0.6;
+}
+
+.uptime-degraded {
+    background: var(--accent-warning);
+    opacity: 0.8;
+}
+
+.uptime-down {
+    background: var(--accent-danger);
+    opacity: 0.9;
+}
+
+.uptime-legend {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+}

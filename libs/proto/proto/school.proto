@@ -1,0 +1,143 @@
+syntax = "proto3";
+package erp.school;
+
+/// School Plugin — Student & Staff management.
+service StudentService {
+  rpc AdmitStudent (AdmitStudentRequest) returns (StudentResponse);
+  rpc GetStudent (GetStudentRequest) returns (StudentResponse);
+  rpc ListStudents (ListStudentsRequest) returns (ListStudentsResponse);
+  rpc UpdateStudent (UpdateStudentRequest) returns (StudentResponse);
+  rpc DeleteStudent (DeleteStudentRequest) returns (StudentResponse);
+}
+
+service StaffService {
+  rpc OnboardStaff (OnboardStaffRequest) returns (StaffResponse);
+  rpc GetStaff (GetStaffRequest) returns (StaffResponse);
+  rpc ListStaff (ListStaffRequest) returns (ListStaffResponse);
+}
+
+// ── Student Messages ──
+
+message AdmitStudentRequest {
+  string tenant_id = 1;
+  string admission_number = 2;
+  string first_name = 3;
+  string last_name = 4;
+  int32 class_grade = 5;
+  string section = 6;
+  string parent_email = 7;
+  string date_of_birth = 8;   // YYYY-MM-DD
+  string class_teacher_id = 9; // optional staff UUID
+  string user_id = 10;         // links to users table
+}
+
+message GetStudentRequest {
+  string tenant_id = 1;
+  string student_id = 2;
+}
+
+message ListStudentsRequest {
+  string tenant_id = 1;
+  int32 class_grade = 2;       // 0 = all classes
+  string section = 3;          // empty = all sections
+}
+
+message UpdateStudentRequest {
+  string tenant_id = 1;
+  string student_id = 2;
+  string first_name = 3;
+  string last_name = 4;
+  int32 class_grade = 5;
+  string section = 6;
+  string parent_email = 7;
+  string class_teacher_id = 8;
+  bool is_active = 9;
+}
+
+message DeleteStudentRequest {
+  string tenant_id = 1;
+  string student_id = 2;
+}
+
+message StudentResponse {
+  bool success = 1;
+  string message = 2;
+  Student student = 3;
+}
+
+message ListStudentsResponse {
+  repeated Student students = 1;
+}
+
+message Student {
+  string id = 1;
+  string admission_number = 2;
+  string first_name = 3;
+  string last_name = 4;
+  int32 class_grade = 5;
+  string section = 6;
+  string parent_email = 7;
+  string class_teacher_id = 8;
+  bool is_active = 9;
+  string created_at = 10;
+  string user_id = 11;
+}
+
+// ── Staff Messages ──
+
+message OnboardStaffRequest {
+  string tenant_id = 1;
+  string user_id = 2;           // links to users table
+  string employee_number = 3;
+  string designation = 4;       // teacher, clerk, principal
+  string department = 5;
+}
+
+message GetStaffRequest {
+  string tenant_id = 1;
+  string staff_id = 2;
+}
+
+message ListStaffRequest {
+  string tenant_id = 1;
+  string designation = 2;       // empty = all
+}
+
+message StaffResponse {
+  bool success = 1;
+  string message = 2;
+  StaffMember staff = 3;
+}
+
+message ListStaffResponse {
+  repeated StaffMember staff = 1;
+}
+
+message StaffMember {
+  string id = 1;
+  string user_id = 2;
+  string employee_number = 3;
+  string designation = 4;
+  string department = 5;
+  string full_name = 6;
+  bool is_active = 7;
+  string created_at = 8;
+}
+
+// ── Number Generation ──
+
+service NumberService {
+  /// Get the next auto-generated admission/employee number for a school.
+  rpc GetNextNumber (GetNextNumberRequest) returns (GetNextNumberResponse);
+}
+
+message GetNextNumberRequest {
+  string tenant_id = 1;
+  string type = 2;         // "student" or "staff"
+}
+
+message GetNextNumberResponse {
+  bool success = 1;
+  string number = 2;       // formatted number, e.g., "GVS-S-25001"
+  string message = 3;
+}

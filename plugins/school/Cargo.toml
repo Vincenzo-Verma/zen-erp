@@ -1,0 +1,29 @@
+[package]
+name = "school-service"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "school-service"
+path = "src/main.rs"
+
+[lib]
+name = "erp_school"
+path = "src/lib.rs"
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+prost = { workspace = true }
+sqlx = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+
+erp-proto = { path = "../../libs/proto" }
+erp-logger = { path = "../../libs/logger" }
+erp-db-utils = { path = "../../libs/db-utils" }
+dotenvy = "0.15"

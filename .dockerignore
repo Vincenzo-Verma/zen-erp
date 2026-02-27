@@ -1,0 +1,13 @@
+target/
+frontend/node_modules/
+frontend/dist/
+.git/
+.github/
+.env
+.env.*
+*.md
+deploy/
+.dockerignore
+.gitignore
+.vscode/
+*.log

@@ -1,0 +1,115 @@
+/* ============================================
+   Bootstrap Overrides
+   Wire --erp-* custom properties into Bootstrap's --bs-* system.
+   template.css handles component-level styling;
+   this file only bridges theme variables and fills gaps.
+   ============================================ */
+
+/* --- Override Bootstrap CSS variables --- */
+:root,
+[data-bs-theme="light"] {
+    --bs-primary: #3D5EE1;
+    --bs-primary-rgb: 61, 94, 225;
+    --bs-success: #1ABE17;
+    --bs-success-rgb: 26, 190, 23;
+    --bs-warning: #EAB300;
+    --bs-warning-rgb: 234, 179, 0;
+    --bs-danger: #E82646;
+    --bs-danger-rgb: 232, 38, 70;
+    --bs-info: #0F65CD;
+    --bs-info-rgb: 15, 101, 205;
+    --bs-body-bg: var(--erp-body-bg);
+    --bs-body-color: var(--erp-text-primary);
+    --bs-border-color: var(--erp-border);
+    --bs-card-bg: var(--erp-card-bg);
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: var(--erp-body-bg);
+    --bs-body-color: var(--erp-text-primary);
+    --bs-border-color: var(--erp-border);
+    --bs-card-bg: var(--erp-card-bg);
+    --bs-tertiary-bg: #1B1632;
+}
+
+/* --- Body --- */
+body {
+    font-family: 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    background-color: var(--erp-body-bg);
+    color: var(--erp-text-primary);
+}
+
+/* --- Modal (not fully covered by template.css) --- */
+.modal-content {
+    border: 1px solid var(--erp-border);
+    background-color: var(--erp-card-bg);
+    border-radius: var(--erp-radius-lg);
+    box-shadow: var(--erp-shadow-lg);
+}
+
+.modal-header {
+    border-color: var(--erp-border);
+    padding: 1rem 1.25rem;
+}
+
+.modal-footer {
+    border-color: var(--erp-border);
+    padding: 1rem 1.25rem;
+}
+
+/* --- Soft / transparent background utilities --- */
+.bg-soft-primary   { background-color: #ECEFFC !important; }
+.bg-soft-secondary  { background-color: #D4F0F3 !important; }
+.bg-soft-success   { background-color: #BAECB9 !important; }
+.bg-soft-danger    { background-color: #F8BEC8 !important; }
+.bg-soft-warning   { background-color: #FDE9C1 !important; }
+.bg-soft-info      { background-color: rgba(15, 101, 205, 0.3) !important; }
+.bg-soft-light     { background-color: rgba(233, 237, 244, 0.9) !important; }
+.bg-soft-dark      { background-color: rgba(32, 44, 75, 0.3) !important; }
+
+/* --- Transparent-background color variants --- */
+.bg-primary-transparent { background-color: #F2F5FF !important; }
+.bg-success-transparent { background-color: #E8F9E8 !important; }
+.bg-warning-transparent { background-color: #FEF8EA !important; }
+.bg-danger-transparent  { background-color: #FDE9ED !important; }
+.bg-info-transparent    { background-color: #E7F1FC !important; }
+.bg-secondary-transparent { background-color: #E8FCFF !important; }
+
+/* --- Avatar online / offline indicator --- */
+.avatar-online::before,
+.avatar-offline::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.avatar-online { position: relative; }
+.avatar-online::before { background-color: var(--erp-success); }
+
+.avatar-offline { position: relative; }
+.avatar-offline::before { background-color: #838A9B; }
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--erp-border);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--erp-text-muted);
+}

@@ -1,0 +1,27 @@
+[package]
+name = "erp-billing"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "billing-service"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+tracing = { workspace = true }
+dotenvy = { workspace = true }
+sqlx = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+async-nats = { workspace = true }
+
+erp-proto = { path = "../../libs/proto" }
+erp-logger = { path = "../../libs/logger" }
+erp-db-utils = { path = "../../libs/db-utils" }
+erp-event-bus = { path = "../event-bus" }

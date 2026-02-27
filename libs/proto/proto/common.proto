@@ -1,0 +1,15 @@
+syntax = "proto3";
+package erp.common;
+
+/// Tenant context propagated in gRPC metadata.
+message TenantContext {
+  string tenant_id = 1;
+  string user_id = 2;
+  repeated string roles = 3;
+}
+
+/// Standard API response wrapper.
+message ApiStatus {
+  int32 code = 1;
+  string message = 2;
+}

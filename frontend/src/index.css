@@ -1,0 +1,26 @@
+/* ============================================
+   SaaS ERP — Minimal base styles
+   (Most theming is in styles/ folder now)
+   ============================================ */
+
+/* Reset box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.15s ease;
+}

@@ -1,0 +1,30 @@
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-area {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.sidebar-collapsed~.main-area {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+.main-content {
+    flex: 1;
+    padding: var(--space-lg);
+    margin-top: var(--topbar-height);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+    .main-area {
+        margin-left: 0;
+    }
+}
