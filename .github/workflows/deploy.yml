@@ -117,8 +117,14 @@ jobs:
             --from-literal=DATABASE_URL="${{ secrets.DATABASE_URL }}" \
             --from-literal=JWT_SECRET="${{ secrets.JWT_SECRET }}" \
             --from-literal=NATS_URL="${{ secrets.NATS_URL }}" \
-            --from-literal=POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
             --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Cleanup old in-cluster Postgres (if any)
+        run: |
+          kubectl delete statefulset postgres -n saas-erp --ignore-not-found
+          kubectl delete service postgres-service -n saas-erp --ignore-not-found
+          kubectl delete configmap postgres-init -n saas-erp --ignore-not-found
+          kubectl delete pvc postgres-pvc -n saas-erp --ignore-not-found
 
       - name: Replace image registry in manifests
         run: |
@@ -126,32 +132,9 @@ jobs:
           sed -i "s|REGISTRY|${{ env.REGISTRY }}|g" deploy/k8s/05-gateway.yaml
           sed -i "s|REGISTRY|${{ env.REGISTRY }}|g" deploy/k8s/06-frontend.yaml
 
-      - name: Deploy infrastructure (Postgres + NATS)
+      - name: Deploy NATS
         run: |
-          kubectl apply -f deploy/k8s/02-postgres.yaml
           kubectl apply -f deploy/k8s/03-nats.yaml
-          # Delete stuck pods so they get recreated with the correct image
-          kubectl delete pod -n saas-erp -l app=postgres --ignore-not-found
-          kubectl delete pod -n saas-erp -l app=nats --ignore-not-found
-
-      - name: Wait for Postgres to be ready
-        run: |
-          echo "=== PVC Status ==="
-          kubectl get pvc -n saas-erp
-          echo ""
-          echo "=== Waiting for Postgres rollout (5min timeout) ==="
-          kubectl rollout status statefulset/postgres -n saas-erp --timeout=300s || {
-            echo ""
-            echo "=== Pod Status ==="
-            kubectl get pods -n saas-erp -l app=postgres
-            echo ""
-            echo "=== Pod Events ==="
-            kubectl describe pod -n saas-erp -l app=postgres | tail -30
-            echo ""
-            echo "=== PVC Status ==="
-            kubectl describe pvc postgres-pvc -n saas-erp | tail -20
-            exit 1
-          }
 
       - name: Deploy backend services
         run: |
