@@ -130,9 +130,9 @@ jobs:
         run: |
           kubectl apply -f deploy/k8s/02-postgres.yaml
           kubectl apply -f deploy/k8s/03-nats.yaml
-          # Force recreate pods to pick up image changes
-          kubectl rollout restart statefulset/postgres -n saas-erp
-          kubectl rollout restart deployment/nats -n saas-erp
+          # Delete stuck pods so they get recreated with the correct image
+          kubectl delete pod -n saas-erp -l app=postgres --ignore-not-found
+          kubectl delete pod -n saas-erp -l app=nats --ignore-not-found
 
       - name: Wait for Postgres to be ready
         run: |
