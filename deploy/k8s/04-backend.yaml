@@ -5,7 +5,7 @@ metadata:
   name: auth-service
   namespace: saas-erp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: auth-service
@@ -53,7 +53,7 @@ metadata:
   name: tenancy-service
   namespace: saas-erp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tenancy-service
@@ -101,7 +101,7 @@ metadata:
   name: billing-service
   namespace: saas-erp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: billing-service
@@ -149,7 +149,7 @@ metadata:
   name: school-service
   namespace: saas-erp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: school-service

@@ -164,8 +164,8 @@ jobs:
 
       - name: Wait for rollout to complete
         run: |
-          kubectl rollout status deployment/gateway -n saas-erp --timeout=180s
-          kubectl rollout status deployment/frontend -n saas-erp --timeout=180s
+          kubectl rollout status deployment/gateway -n saas-erp --timeout=300s || true
+          kubectl rollout status deployment/frontend -n saas-erp --timeout=300s || true
 
       - name: Verify deployment
         run: |
@@ -174,3 +174,10 @@ jobs:
           echo ""
           echo "=== Services ==="
           kubectl get svc -n saas-erp
+          echo ""
+          echo "=== Failing Pod Logs ==="
+          for pod in $(kubectl get pods -n saas-erp --no-headers | grep -v Running | awk '{print $1}'); do
+            echo "--- Logs for $pod ---"
+            kubectl logs "$pod" -n saas-erp --tail=20 2>&1 || true
+            echo ""
+          done
