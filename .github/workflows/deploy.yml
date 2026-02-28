@@ -119,6 +119,16 @@ jobs:
             --from-literal=NATS_URL="${{ secrets.NATS_URL }}" \
             --dry-run=client -o yaml | kubectl apply -f -
 
+      - name: Create/update OCIR image pull secret
+        run: |
+          kubectl create secret docker-registry ocir-secret \
+            --namespace saas-erp \
+            --docker-server=${{ env.OCI_REGION }}.ocir.io \
+            --docker-username='${{ secrets.OCIR_USERNAME }}' \
+            --docker-password='${{ secrets.OCIR_TOKEN }}' \
+            --docker-email=noreply@example.com \
+            --dry-run=client -o yaml | kubectl apply -f -
+
       - name: Cleanup old in-cluster Postgres (if any)
         run: |
           kubectl delete statefulset postgres -n saas-erp --ignore-not-found
