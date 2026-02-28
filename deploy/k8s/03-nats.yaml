@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nats
-          image: nats:2-alpine
+          image: docker.io/library/nats:2-alpine
           command: ["nats-server", "--jetstream", "--store_dir", "/data"]
           ports:
             - containerPort: 4222
